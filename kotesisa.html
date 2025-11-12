@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ko te šiša-Tuzla</title>
+    <link rel="icon" type="image/x-icon" href="logo.png">
+    <style>
+        /* =================================================================
+           1. OSNOVNI STILOVI I RESET
+           ================================================================= */
+        :root {
+            /* Main Colors */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f4f4f4;
+            --text-color: #1a1a1a;
+            --accent: #b30000; /* Subtle darker red for accents */
+            --header-bg: #111111; /* New, darker header background */
+            --header-text: var(--bg-primary); 
+            
+            --font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            --header-height: 80px;
+        }
+
+        /* DARK MODE STYLES */
+        body.dark-mode {
+            --bg-primary: #1a1a1a; 
+            --bg-secondary: #2c2c2c; 
+            --text-color: #ffffff; 
+            --header-bg: #000000; 
+            --header-text: var(--text-color);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: var(--text-color); 
+            background-color: var(--bg-primary); 
+            scroll-behavior: smooth;
+            transition: background-color 0.3s, color 0.3s; 
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1, h2, h3 {
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        h1 { font-size: 3em; }
+        h2 { font-size: 2em; text-align: center; }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color); 
+            transition: color 0.3s;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white !important; 
+            padding: 12px 30px;
+            text-transform: uppercase;
+            font-weight: bold;
+            border: 2px solid var(--accent);
+            transition: background-color 0.3s, color 0.3s;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .cta-button:hover {
+            background-color: transparent; 
+            color: var(--accent) !important;
+        }
+
+        section {
+            padding: 80px 0;
+            min-height: 60vh;
+        }
+
+        /* =================================================================
+           2. HEADER AND NAVIGATION
+           ================================================================= */
+        header {
+            background-color: var(--header-bg); 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+        }
+        
+        header a {
+            color: var(--header-text); 
+        }
+
+        header a:hover {
+            color: var(--accent);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--accent);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+        }
+
+        .nav-links li {
+            margin-left: 30px;
+        }
+
+        /* Mode and Language Controls */
+        .settings-controls {
+            display: flex;
+            align-items: center;
+        }
+        
+        .mode-toggle, .lang-toggle {
+            cursor: pointer;
+            margin-left: 20px;
+            font-size: 1.2em;
+            transition: transform 0.2s;
+            color: var(--header-text);
+        }
+
+        .mode-toggle:hover, .lang-toggle:hover {
+             transform: scale(1.1);
+             color: var(--accent);
+        }
+        
+        /* =================================================================
+           3. HERO SECTION
+           ================================================================= */
+        #hero {
+            padding-top: var(--header-height);
+            min-height: 100vh;
+            background: var(--bg-secondary); 
+            display: flex;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-content {
+            margin: 0 auto;
+            max-width: 800px;
+        }
+        
+        /* HERO LOGO STYLES */
+        .hero-logo {
+            width: 150px; 
+            height: 150px;
+            object-fit: contain; 
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); 
+        }
+        
+        .hero-content h1 {
+            font-size: 5em;
+            letter-spacing: 5px;
+            color: var(--accent);
+        }
+        
+        .hero-content p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            font-style: italic;
+        }
+
+        /* =================================================================
+           4. SERVICES AND PRICES
+           ================================================================= */
+        #usluge {
+            background-color: var(--bg-primary); 
+        }
+
+        .service-list {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--text-color); 
+            font-size: 1.1em;
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        /* =================================================================
+           5. GALLERY
+           ================================================================= */
+        #galerija {
+            background-color: var(--bg-secondary); 
+            text-align: center;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            aspect-ratio: 1 / 1; 
+            position: relative; /* Dodano za pozicioniranje slike */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+        
+        /* Novi stil za slike unutar galerije */
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Osigurava da slika pokriva cijeli element, bez obzira na proporcije */
+            display: block;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03); /* Blagi efekat uvećanja */
+        }
+
+        /* =================================================================
+           6. LOCATION AND CONTACT
+           ================================================================= */
+        #kontakt {
+            background-color: var(--header-bg); 
+            color: var(--header-text); 
+            text-align: center;
+        }
+
+        #kontakt h2, #kontakt a {
+            color: var(--header-text); 
+        }
+
+        #kontakt a:hover {
+            color: var(--accent);
+        }
+        
+        .contact-details {
+            margin-top: 30px;
+            font-size: 1.2em;
+        }
+
+        .contact-details p {
+            margin-bottom: 10px;
+        }
+
+        /* =================================================================
+           7. FOOTER
+           ================================================================= */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 0.8em;
+            background-color: var(--header-bg); 
+            color: var(--header-text); 
+        }
+        
+        /* =================================================================
+           8. SIDEBAR GIFS
+           ================================================================= */
+        .sidebar-gif {
+            position: fixed; 
+            top: 50%; 
+            transform: translateY(-50%); 
+            width: 120px; 
+            height: auto;
+            z-index: 999; 
+        }
+
+        .gif-left {
+            left: 20px; 
+        }
+
+        .gif-right {
+            right: 20px; 
+        }
+
+
+        /* =================================================================
+           9. RESPONSIVENESS (MOBILE)
+           ================================================================= */
+        @media (max-width: 1024px) {
+            .sidebar-gif {
+                display: none;
+            }
+
+            .nav-links {
+                display: none; 
+            }
+
+            .hero-content h1 {
+                font-size: 3em;
+            }
+            
+            .hero-content p {
+                font-size: 1.2em;
+            }
+
+            h2 {
+                font-size: 1.6em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <img src="Barbershop Pole Sticker by Mr.Barber.gif" alt="Decorative left gif" class="sidebar-gif gif-left">
+    <img src="Barbershop Pole Sticker by Mr.Barber.gif" alt="Decorative right gif" class="sidebar-gif gif-right">
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">KO TE ŠIŠA</div>
+                <ul class="nav-links">
+                    <li><a href="#usluge" data-key="nav_usluge">Services</a></li>
+                    <li><a href="#galerija" data-key="nav_galerija">Gallery</a></li>
+                    <li><a href="#kontakt" data-key="nav_kontakt">Contact</a></li>
+                </ul>
+                
+                <div class="settings-controls">
+                    <span id="mode-toggle" class="mode-toggle">🌙</span>
+                    <span id="lang-toggle" class="lang-toggle" data-current-lang="en">🇧🇦</span> 
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section id="hero">
+        <div class="container hero-content">
+            <img src="logo.png" alt="Ko te šiša Logo" class="hero-logo">
+
+            <h1>KO TE ŠIŠA</h1>
+            <p data-key="tagline">Traditional Craft. Modern Style.</p>
+            <p style="font-size:1em; font-style: normal; margin-bottom: 40px;" data-key="owner">Mehmed Efendić, Owner & Master Barber</p>
+            <a href="#kontakt" class="cta-button" data-key="cta">BOOK YOUR APPOINTMENT</a>
+        </div>
+    </section>
+
+    <section id="usluge">
+        <div class="container">
+            <h2 data-key="h2_usluge">Our Services</h2>
+            <div class="service-list">
+                <div class="service-item">
+                    <span data-key="serv1">Men's Haircut</span>
+                    <span>13 KM</span>
+                </div>
+                <div class="service-item">
+                    <span data-key="serv2">Beard Shaping</span>
+                    <span>7 KM</span>
+                </div>
+                <div class="service-item">
+                    <span data-key="serv3">Shave</span>
+                    <span>7 KM</span>
+                </div>
+                <div class="service-item">
+                    <span data-key="serv4">Hair Wash</span>
+                    <span>5 KM</span>
+                </div>
+                </div>
+            <p data-key="note_cene" style="text-align: center; margin-top: 30px;">Prices are informative. Detailed price list available in the salon.</p>
+        </div>
+    </section>
+
+    <section id="galerija">
+        <div class="container">
+            <h2 data-key="h2_galerija">Our Work</h2>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="1.jpg" alt="Muška frizura 1">
+                </div>
+                <div class="gallery-item">
+                    <img src="2.jpg" alt="Muška frizura 2">
+                </div>
+                <div class="gallery-item">
+                    <img src="3.jpg" alt="Muška frizura 3">
+                </div>
+                <div class="gallery-item">
+                    <img src="4.jpg" alt="Muška frizura 4">
+                </div>
+                <div class="gallery-item">
+                    <img src="5.jpg" alt="Muška frizura 5">
+                </div>
+                <div class="gallery-item">
+                    <img src="6.jpg" alt="Muška frizura 6">
+                </div>
+                </div>
+            <a href="https://www.instagram.com/kotesisa.tuzla/" target="_blank" class="cta-button" data-key="cta_insta">FOLLOW US ON INSTAGRAM</a>
+        </div>
+    </section>
+    
+    <section id="kontakt">
+        <div class="container">
+            <h2 data-key="h2_kontakt">Contact Us</h2>
+            <div class="contact-details">
+                <p data-key="loc">📍 Tušanj 13, Tuzla</p>
+                <p>📞 <a href="tel:+387603257129">+387 60 32 57 129</a></p>
+                <p data-key="work_hours">Working hours: Mon - Fri | 08:00 - 17:00</p>
+                <p style="margin-top: 20px;"><a href="https://www.google.com/maps/place/Tko+te+%C5%A1i%C5%A1a%3F+-+Mu%C5%A1ki+frizer/@44.5429573,18.6658321,615m/data=!3m1!1e3!4m6!3m5!1s0x475ead18558af657:0x5aa26235a650d66d!8m2!3d44.544584!4d18.6640066!16s%2Fg%2F11sz_twqz5?entry=ttu&g_ep=EgoyMDI1MTEwOS4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="text-decoration: underline;" data-key="view_map">View on map</a></p>
+            </div>
+        </div>
+    </section>
+
+    <footer data-key="footer">
+        © 2025 Ko te šiša - Tuzla. All rights reserved.
+    </footer>
+
+    <script>
+        // 1. Definition of translations (AŽURIRANO)
+        const translations = {
+            bs: {
+                title: "Ko te šiša-Tuzla",
+                tagline: "Tradicionalni obrt. Moderni stil.",
+                owner: "Mehmed Efendić, Vlasnik & Master Barber",
+                cta: "ZAKAŽI SVOJ TERMIN",
+                nav_usluge: "Usluge",
+                nav_galerija: "Galerija",
+                nav_kontakt: "Kontakt",
+                h2_usluge: "Naše usluge",
+                h2_galerija: "Naš rad",
+                h2_kontakt: "Kontaktirajte nas",
+                serv1: "Muško šišanje",
+                serv2: "Oblikovanje brade",
+                serv3: "Brijanje",
+                serv4: "Pranje kose",
+                note_cene: "Cijene su informativnog karaktera. Detaljniji cjenovnik dostupan u salonu.",
+                cta_insta: "PRATITE NAS NA INSTAGRAMU",
+                loc: "Tušanj 13, Tuzla",
+                work_hours: "Radno vrijeme: Pon - Pet | 08:00 - 17:00", 
+                view_map: "Pogledajte na mapi",
+                footer: "© 2025 Ko te šiša - Tuzla. Sva prava zadržana."
+            },
+            en: {
+                title: "Ko te šiša-Tuzla",
+                tagline: "Traditional Craft. Modern Style.",
+                owner: "Mehmed Efendić, Owner & Master Barber",
+                cta: "BOOK YOUR APPOINTMENT",
+                nav_usluge: "Services",
+                nav_galerija: "Gallery",
+                nav_kontakt: "Contact",
+                h2_usluge: "Our Services",
+                h2_galerija: "Our Work",
+                h2_kontakt: "Contact Us",
+                serv1: "Men's Haircut",
+                serv2: "Beard Shaping",
+                serv3: "Shave", 
+                serv4: "Hair Wash", 
+                note_cene: "Prices are informative. Detailed price list available in the salon.",
+                cta_insta: "FOLLOW US ON INSTAGRAM",
+                loc: "Tušanj 13, Tuzla",
+                work_hours: "Working hours: Mon - Fri | 08:00 - 17:00",
+                view_map: "View on map",
+                footer: "© 2025 Ko te šiša - Tuzla. All rights reserved."
+            }
+        };
+
+        // 2. Function to translate content
+        function translateContent(lang) {
+            const t = translations[lang];
+
+            // Update title
+            document.title = t.title;
+
+            // Update navigation links
+            document.querySelector('[data-key="nav_usluge"]').textContent = t.nav_usluge;
+            document.querySelector('[data-key="nav_galerija"]').textContent = t.nav_galerija;
+            document.querySelector('[data-key="nav_kontakt"]').textContent = t.nav_kontakt;
+            
+            // Update Hero section elements
+            document.querySelector('[data-key="tagline"]').textContent = t.tagline;
+            document.querySelector('[data-key="owner"]').textContent = t.owner;
+            document.querySelector('[data-key="cta"]').textContent = t.cta;
+
+            // Update H2 headings
+            document.querySelector('[data-key="h2_usluge"]').textContent = t.h2_usluge;
+            document.querySelector('[data-key="h2_galerija"]').textContent = t.h2_galerija;
+            document.querySelector('[data-key="h2_kontakt"]').textContent = t.h2_kontakt;
+            
+            // Update service items 
+            if(document.querySelector('[data-key="serv1"]')) document.querySelector('[data-key="serv1"]').textContent = t.serv1;
+            if(document.querySelector('[data-key="serv2"]')) document.querySelector('[data-key="serv2"]').textContent = t.serv2;
+            if(document.querySelector('[data-key="serv3"]')) document.querySelector('[data-key="serv3"]').textContent = t.serv3;
+            if(document.querySelector('[data-key="serv4"]')) document.querySelector('[data-key="serv4"]').textContent = t.serv4;
+
+            // Update remaining elements
+            document.querySelector('[data-key="note_cene"]').textContent = t.note_cene;
+            document.querySelector('[data-key="cta_insta"]').textContent = t.cta_insta;
+            
+            document.querySelector('[data-key="loc"]').textContent = '📍 ' + t.loc;
+            document.querySelector('[data-key="work_hours"]').textContent = t.work_hours;
+            document.querySelector('[data-key="view_map"]').textContent = t.view_map;
+            
+            document.querySelector('[data-key="footer"]').textContent = t.footer;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const langToggle = document.getElementById('lang-toggle');
+            const modeToggle = document.getElementById('mode-toggle');
+            const body = document.body;
+
+            // Initialization: Check if mode and language are already set
+            let currentLang = localStorage.getItem('lang') || 'en'; // Default to English
+            let currentMode = localStorage.getItem('mode') || 'day';
+
+            // Apply initial language settings
+            translateContent(currentLang);
+            langToggle.textContent = currentLang === 'en' ? '🇧🇦' : '🇺🇸'; // Show flag to switch to BA/EN
+            langToggle.dataset.currentLang = currentLang;
+
+            // Apply initial mode settings
+            if (currentMode === 'night') {
+                body.classList.add('dark-mode');
+                modeToggle.textContent = '☀️';
+                localStorage.setItem('mode', 'night'); 
+            } else {
+                modeToggle.textContent = '🌙';
+                localStorage.setItem('mode', 'day'); 
+            }
+
+            // Day/Night mode logic
+            modeToggle.addEventListener('click', function() {
+                body.classList.toggle('dark-mode');
+                
+                if (body.classList.contains('dark-mode')) {
+                    modeToggle.textContent = '☀️';
+                    localStorage.setItem('mode', 'night');
+                } else {
+                    modeToggle.textContent = '🌙';
+                    localStorage.setItem('mode', 'day');
+                }
+            });
+
+            // Language switching logic
+            langToggle.addEventListener('click', function() {
+                currentLang = currentLang === 'en' ? 'bs' : 'en'; // Toggle between EN and BS
+                
+                translateContent(currentLang);
+                
+                langToggle.textContent = currentLang === 'en' ? '🇧🇦' : '🇺🇸'; // Show opposite flag
+                langToggle.dataset.currentLang = currentLang;
+                localStorage.setItem('lang', currentLang);
+            });
+            
+            // Smooth scrolling for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+        });
+    </script>
+
+</body>
+</html>
